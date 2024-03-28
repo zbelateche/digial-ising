@@ -13,9 +13,7 @@
 `endif
 
 module top_ising   #(parameter N = 3,
-	             parameter NUM_WEIGHTS = 5,
-	             parameter WIRE_DELAY = 20,
-		     parameter NUM_LUTS = 2) (
+	             parameter NUM_WEIGHTS = 5) (
 		     input  wire clk,
 		     input  wire ising_rstn,
 		     input  wire [31:0] counter_max, 
@@ -33,9 +31,7 @@ module top_ising   #(parameter N = 3,
     wire [N-1:0] outputs;
 
     core_matrix #(.N(N),
-	          .NUM_WEIGHTS(NUM_WEIGHTS),
-	          .WIRE_DELAY(WIRE_DELAY),
-	          .NUM_LUTS(NUM_LUTS)) u_core_matrix (
+	          .NUM_WEIGHTS(NUM_WEIGHTS)) u_core_matrix (
 		  .ising_rstn(ising_rstn),
 		  .outputs(outputs),
 		  .clk(clk),

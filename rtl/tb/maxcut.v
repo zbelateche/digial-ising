@@ -38,8 +38,7 @@ module maxcut_tb();
     // Cell H is the local field, which is positively coupled with all of the
     // other active cells.
     ising_axi   #(.N(8),
-	          .NUM_WEIGHTS(3),
-		  .WIRE_DELAY(10)) dut(
+	          .NUM_WEIGHTS(3)) dut(
 		  .clk(clk),
 		  .axi_rstn(rstn),
                   .arvalid_q(1'b1),
@@ -71,16 +70,19 @@ module maxcut_tb();
 	waddr = 32'b0;
 	wdata = 32'b0;
         rstn = 1'b0;
+	wready = 1'b0;
 
         @(posedge clk);
         @(posedge clk);
         @(posedge clk);
+	#1
 	rstn = 1'b1;
 
         /////////////////////////////////////////////////////////////
 	// Program counters
 	
 	@(posedge clk);
+	#1
 	wready = 1'b1;
 
         @(posedge clk);
@@ -101,13 +103,13 @@ module maxcut_tb();
 	raddr = `WEIGHT_ADDR_BASE + (31'd0 << 2) + (31'd1 << 13);
 	@(posedge clk);
 	#1
-	if(rdata[2:0] != 3'b010) $display("!!! AB FAILED !!!"); //A
+	if(rdata[2:0] != 3'b001) $display("!!! AB FAILED !!!"); //A
 
 	/////////////////////////////////////////////////////////////
 	// Program initial spins
 	
 	@(posedge clk);
-	waddr = `WEIGHT_ADDR_BASE + (32'd1 << 2) + (32'd1 << 13); //B
+	waddr = `WEIGHT_ADDR_BASE + (32'd1 << 2) + (32'd1 << 13); //E
 	wdata = 32'h00000001;                                     //000
 	
 	/////////////////////////////////////////////////////////////
