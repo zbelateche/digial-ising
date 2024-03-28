@@ -102,23 +102,11 @@ set_property USED_IN {synthesis implementation OUT_OF_CONTEXT} [get_files cl_clo
 set_property PROCESSING_ORDER EARLY  [get_files cl_clocks_aws.xdc]
 
 ########################
-# OOC Synthesis
-########################
-puts "AWS FPGA: ([clock format [clock seconds] -format %T]) Start out-of-context synthesis.";
-
-update_compile_order -fileset sources_1
-puts "\nRunning synth_design for coupled_cell $CL_DIR/build/scripts \[[clock format [clock seconds] -format {%a %b %d %H:%M:%S %Y}]\]"
-eval [concat synth_design -top coupled_cell -verilog_define XSDB_SLV_DIS $VDEFINES -part [DEVICE_TYPE] -mode out_of_context $synth_options -directive $synth_directive]
-
-
-########################
 # CL Synthesis
 ########################
 puts "AWS FPGA: ([clock format [clock seconds] -format %T]) Start design synthesis.";
 
 update_compile_order -fileset sources_1
-set_property HD.PARTITION 1 [current_design]
-
 puts "\nRunning synth_design for $CL_MODULE $CL_DIR/build/scripts \[[clock format [clock seconds] -format {%a %b %d %H:%M:%S %Y}]\]"
 eval [concat synth_design -top $CL_MODULE -verilog_define XSDB_SLV_DIS $VDEFINES -part [DEVICE_TYPE] -mode out_of_context $synth_options -directive $synth_directive]
 
