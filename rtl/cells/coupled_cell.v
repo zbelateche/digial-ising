@@ -63,8 +63,8 @@ module coupled_cell #(parameter N           = 8,
     end
 
     // Calculate the total input energy
-    localparam ref_energy  = $floor(NUM_WEIGHTS * N / 2);
-    localparam zero_energy = $floor(NUM_WEIGHTS / 2);
+    wire [$clog2(NUM_WEIGHTS * N)-1:0] ref_energy  = NUM_WEIGHTS * N / 2;
+    wire [$clog2(NUM_WEIGHTS * N)-1:0] zero_energy = NUM_WEIGHTS / 2;
      
     generate for (i = 0; i < N-1; i = i + 1) begin: loop
         wire [$clog2(NUM_WEIGHTS * N)-1:0] energy;
